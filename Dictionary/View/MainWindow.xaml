@@ -1,0 +1,81 @@
+﻿<Window x:Class="Dictionary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dictionary"
+        mc:Ignorable="d"
+        Title="Dictionary" Height="450" Width="800">
+    <Grid Margin="10 10 10 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+            
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Grid Margin="0 0 0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+
+                
+                    <Label Content="Word: " Grid.Column="0"/>
+                    <TextBox Grid.Column="1" BorderThickness="0 0 0 1"
+                             VerticalAlignment="Center" Padding="5"/>
+
+                    <Label Content="Part of speech: " Grid.Column="2"/>
+                    <ComboBox Height="20" Grid.Column="3"/>
+
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Definition: "/>
+                    <TextBox Grid.Column="1" VerticalAlignment="Center"
+                            Padding="5" BorderThickness="0 0 0 1"/>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="Add" Grid.Column="0" Margin="0 0 5 0"
+                            Width="80"/>
+                    <Button Content="Del" Grid.Column="1" Margin="5 0"
+                            Width="80"/>
+                    <Button Content="Edit" Grid.Column="2" Margin="5 0 0 0"
+                            Width="80"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="10 0">
+                <TextBlock Text="Filter: "/>
+            </Grid>
+            
+        </Grid>
+        
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="WORD" Width="4*"/>
+                <DataGridComboBoxColumn Header="PART OF SPEECH" Width="2*" MaxWidth="120"/>
+                <DataGridTextColumn Header="DEFINITION" Width="8*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
