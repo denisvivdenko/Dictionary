@@ -4,8 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dictionary"
+        xmlns:vm="clr-namespace:Dictionary.ViewModel"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Dictionary" Height="450" Width="800">
+
+    <Window.Resources>
+        
+        <ObjectDataProvider x:Key="EnumParts" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="vm:PartSpeech"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    
     <Grid Margin="10 10 10 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -30,16 +43,19 @@
                         <ColumnDefinition Width="70"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="90"/>
                     </Grid.ColumnDefinitions>
 
                 
                     <Label Content="Word: " Grid.Column="0"/>
                     <TextBox Grid.Column="1" BorderThickness="0 0 0 1"
-                             VerticalAlignment="Center" Padding="5"/>
+                             VerticalAlignment="Center" FontSize="13" Text="{Binding Word}"/>
 
                     <Label Content="Part of speech: " Grid.Column="2"/>
-                    <ComboBox Height="20" Grid.Column="3"/>
+                    <ComboBox Height="20" Grid.Column="3" IsEditable="True"
+                              IsReadOnly="True" Text="Select Part" Focusable="False"
+                              ItemsSource="{Binding Source={StaticResource EnumParts}}"
+                              SelectedItem="{Binding Part}"/>
 
                 </Grid>
 
@@ -50,17 +66,17 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Definition: "/>
                     <TextBox Grid.Column="1" VerticalAlignment="Center"
-                            Padding="5" BorderThickness="0 0 0 1"/>
+                            FontSize="13" BorderThickness="0 0 0 1" Text="{Binding Definition}"/>
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0"
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button Content="Add" Grid.Column="0" Margin="0 0 5 0"
-                            Width="80"/>
+                            Width="80" Command="{Binding AddButton}"/>
                     <Button Content="Del" Grid.Column="1" Margin="5 0"
-                            Width="80"/>
+                            Width="80" Command="{Binding DelButton}"/>
                     <Button Content="Edit" Grid.Column="2" Margin="5 0 0 0"
-                            Width="80"/>
+                            Width="80" Command="{Binding EditButton}"/>
                 </StackPanel>
             </Grid>
 
@@ -70,11 +86,17 @@
             
         </Grid>
         
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                  ItemsSource="{Binding WordCollection}" CanUserDeleteRows="False"
+                  CanUserAddRows="False" SelectedItem="{Binding SelectedRow}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="WORD" Width="4*"/>
-                <DataGridComboBoxColumn Header="PART OF SPEECH" Width="2*" MaxWidth="120"/>
-                <DataGridTextColumn Header="DEFINITION" Width="8*"/>
+                <DataGridTextColumn Header="WORD" Width="4*" 
+                                    Binding="{Binding Word}"/>
+                <DataGridComboBoxColumn Header="PART OF SPEECH" Width="2*" MaxWidth="120"
+                                        ItemsSource="{Binding Source={StaticResource EnumParts}}"
+                                        SelectedItemBinding="{Binding Part}"/>
+                <DataGridTextColumn Header="DEFINITION" Width="8*"
+                                    Binding="{Binding Definition}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
