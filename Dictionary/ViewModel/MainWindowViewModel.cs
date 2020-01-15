@@ -24,6 +24,8 @@ namespace Dictionary.ViewModel
     }
     class MainWindowViewModel
     {
+        public SettingsModel settings;
+
         // Fields that receive an input
         public string Word { get; set; }
         public string Definition { get; set; }
@@ -41,11 +43,12 @@ namespace Dictionary.ViewModel
         public WordModel SelectedRow { get; set; }
 
         public MainWindowViewModel()
-        {
+        {   
             AddButton = new Command(AddAction);
             DelButton = new Command(DelAction);
             EditButton = new Command(EditAction);
 
+            settings = SettingsModel.GetInstance();
             WordCollection = new ObservableCollection<WordModel>();
         }
 
