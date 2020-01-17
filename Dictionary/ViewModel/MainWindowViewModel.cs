@@ -25,6 +25,7 @@ namespace Dictionary.ViewModel
     class MainWindowViewModel
     {
         public SettingsModel settings;
+        public DataBaseAccess dataAccess;
 
         // Fields that receive an input
         public string Word { get; set; }
@@ -40,7 +41,7 @@ namespace Dictionary.ViewModel
         public ObservableCollection<WordModel> WordCollection { get; set; }
 
         // Selected item in DataGrid
-        public WordModel SelectedRow { get; set; }
+        public WordModel SelectedWord { get; set; }
 
         public MainWindowViewModel()
         {   
@@ -49,20 +50,30 @@ namespace Dictionary.ViewModel
             EditButton = new Command(EditAction);
 
             settings = SettingsModel.GetInstance();
-            WordCollection = new ObservableCollection<WordModel>();
+            dataAccess = DataBaseAccess.GetInstance();
+            WordCollection = dataAccess.LoadWords();
         }
 
         // Action when user click Add button
         private void AddAction()
         {
             WordModel word = new WordModel(Word, Definition, Part);
+            settings.WordsAmount += 1;
             WordCollection.Add(word);
+            dataAccess.SaveWord(word);
         }
 
         // Action when user click Del button
         private void DelAction()
         {
-            WordCollection.Remove(SelectedRow);
+            if (SelectedWord != null)
+            {
+                settings.WordsAmount -= 1;
+                dataAccess.RemoveWord(SelectedWord);
+                WordCollection.Remove(SelectedWord);
+            }
+            
+            
         }
 
         // Action when user click Edit button

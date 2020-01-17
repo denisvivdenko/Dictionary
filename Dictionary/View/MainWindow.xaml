@@ -88,7 +88,7 @@
         
         <DataGrid Grid.Row="1" AutoGenerateColumns="False"
                   ItemsSource="{Binding WordCollection}" CanUserDeleteRows="False"
-                  CanUserAddRows="False" SelectedItem="{Binding SelectedRow}">
+                  CanUserAddRows="False" SelectedItem="{Binding SelectedWord}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="WORD" Width="4*" 
                                     Binding="{Binding Word}"/>

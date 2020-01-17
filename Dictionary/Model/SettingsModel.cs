@@ -23,11 +23,7 @@ namespace Dictionary.Model
             set
             {
                 _lastId = value;
-                // save changes
-                if (instance != null)
-                {
-                    SaveData(instance);
-                }
+                UpdateJson();
             }
         }
         public int WordsAmount
@@ -39,11 +35,7 @@ namespace Dictionary.Model
             set
             {
                 _wodsAmount = value;
-                //save changes
-                if (instance != null)
-                {
-                    SaveData(instance);
-                }
+                UpdateJson();
                 
             }
         }
@@ -89,5 +81,14 @@ namespace Dictionary.Model
             }
 
         }
+
+        private void UpdateJson()
+        {
+            if (instance != null)
+            {
+                SaveData(instance);
+            }
+        }
+
     }
 }

@@ -16,9 +16,19 @@ namespace Dictionary.Model
 
         public WordModel(string word, string definition, PartSpeech part)
         {
+            SettingsModel settings = SettingsModel.GetInstance();
             Word = word;
             Definition = definition;
             Part = part;
+            Id = ++(settings.LastId); 
+        }
+
+        public WordModel(int id, string word, string definition, PartSpeech part)
+        {
+            Word = word;
+            Definition = definition;
+            Part = part;
+            Id = id;
         }
     }
 }
