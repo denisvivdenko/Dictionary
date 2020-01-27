@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Dictionary.Model;
+using Dictionary.View;
 
 namespace Dictionary.ViewModel
 {
@@ -22,8 +26,11 @@ namespace Dictionary.ViewModel
         Articles,
         Interjection
     }
-    class MainWindowViewModel
+    
+    class MainWindowViewModel : ObservableObject
     {
+        private MainWindow view;
+
         public SettingsModel settings;
         public DataBaseAccess dataAccess;
 
@@ -38,12 +45,13 @@ namespace Dictionary.ViewModel
         public Command EditButton { get; set; }
 
         // Binging collection for DataGrid
-        public ObservableCollection<WordModel> WordCollection { get; set; }
+        public BindingList<WordModel> WordCollection { get; set; }
+       
 
         // Selected item in DataGrid
         public WordModel SelectedWord { get; set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(MainWindow view)
         {   
             AddButton = new Command(AddAction);
             DelButton = new Command(DelAction);
@@ -52,6 +60,8 @@ namespace Dictionary.ViewModel
             settings = SettingsModel.GetInstance();
             dataAccess = DataBaseAccess.GetInstance();
             WordCollection = dataAccess.LoadWords();
+
+            this.view = view;
         }
 
         // Action when user click Add button
@@ -72,14 +82,12 @@ namespace Dictionary.ViewModel
                 dataAccess.RemoveWord(SelectedWord);
                 WordCollection.Remove(SelectedWord);
             }
-            
-            
         }
 
         // Action when user click Edit button
         private void EditAction()
-        {
-
+        {  
+            
         }
     }
 }

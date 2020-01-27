@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Collections.ObjectModel;
 using Dictionary.ViewModel;
+using System.ComponentModel;
 
 namespace Dictionary.Model
 {
@@ -73,9 +74,9 @@ namespace Dictionary.Model
         }
 
         // load all words that are in database 
-        public ObservableCollection<WordModel> LoadWords()
+        public BindingList<WordModel> LoadWords()
         {
-            ObservableCollection<WordModel> list = new ObservableCollection<WordModel>();
+            BindingList<WordModel> list = new BindingList<WordModel>();
             string query = "SELECT * FROM Words";
             SQLiteCommand command = new SQLiteCommand(query, myConnection);
             using (SQLiteDataReader data = command.ExecuteReader())
@@ -98,6 +99,23 @@ namespace Dictionary.Model
             return list;
         }
 
+        public void UpdateValue(WordModel updatedWord)
+        {
+            string query = @"UPDATE Words
+                            SET Word = @word,
+                                Definition = @definition,
+                                Part = @part
+                            WHERE
+                                Id = @id;";
+            SQLiteCommand command = new SQLiteCommand(query, myConnection);
+            command.Parameters.AddWithValue("@id", updatedWord.Id);
+            command.Parameters.AddWithValue("@word", updatedWord.Word);
+            command.Parameters.AddWithValue("@part", updatedWord.Part);
+            command.Parameters.AddWithValue("definition", updatedWord.Definition);
+
+            command.ExecuteNonQuery();
+        }
+            
         private void openConnection()
         {
             if (myConnection.State != System.Data.ConnectionState.Open)

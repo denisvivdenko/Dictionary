@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Dictionary.ViewModel;
 
-namespace Dictionary
+namespace Dictionary.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,7 +24,9 @@ namespace Dictionary
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel(this);
+           
         }
+
     }
 }
