@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:view="clr-namespace:Dictionary.View"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <Style x:Key="DelButtonTrigger" TargetType="{x:Type Button}"  BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding SelectedItem, ElementName=DataGridView, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                 
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="AddButtonTrigger"  TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Text.Length, ElementName=WordField, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Text.Length, ElementName=MeaningField, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
