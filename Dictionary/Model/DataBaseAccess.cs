@@ -99,6 +99,32 @@ namespace Dictionary.Model
             return list;
         }
 
+        // search for words that contains substring 
+        public BindingList<WordModel> SearchRequest(string request)
+        {
+            BindingList<WordModel> list = new BindingList<WordModel>();
+            string query = string.Format("SELECT * FROM Words WHERE Word LIKE '%{0}%' ORDER BY Word;", request);
+            SQLiteCommand command = new SQLiteCommand(query, myConnection);
+            using (SQLiteDataReader data = command.ExecuteReader())
+            {
+                WordModel Word;
+                while (data.Read())
+                {
+                    int id = data.GetInt32(0);
+                    string word = data.GetString(1);
+                    PartSpeech part;
+                    Enum.TryParse<PartSpeech>(data.GetString(2), out part);
+                    string definition = data.GetString(3);
+
+                    Word = new WordModel(id, word, definition, part);
+
+                    list.Add(Word);
+                }
+            }
+            return list;
+        }
+
+        // update value in the database when it is changed
         public void UpdateValue(WordModel updatedWord)
         {
             string query = @"UPDATE Words

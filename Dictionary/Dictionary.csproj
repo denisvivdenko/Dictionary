@@ -109,6 +109,7 @@
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="ViewModel\Converters\InverseBooleanConverter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

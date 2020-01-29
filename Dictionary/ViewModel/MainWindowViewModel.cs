@@ -30,6 +30,8 @@ namespace Dictionary.ViewModel
     class MainWindowViewModel : ObservableObject
     {
         private MainWindow view;
+        private bool _isCheckedEditMode;
+        private string _searchRequest;
 
         public SettingsModel settings;
         public DataBaseAccess dataAccess;
@@ -50,6 +52,40 @@ namespace Dictionary.ViewModel
 
         // Selected item in DataGrid
         public WordModel SelectedWord { get; set; }
+
+        public bool IsCheckedEditMode
+        {
+            get
+            {
+                return _isCheckedEditMode;
+            }
+            set
+            {
+                _isCheckedEditMode = value;
+                OnPropertyChanged("IsCheckedEditMode");
+            }
+        }
+        public string SearchRequest
+        {
+            get
+            {
+                return _searchRequest;
+            }
+            set
+            {
+                _searchRequest = value;
+
+                if (String.IsNullOrEmpty(_searchRequest))
+                {
+                    WordCollection = dataAccess.LoadWords();
+                }                
+                else
+                {
+                    WordCollection = dataAccess.SearchRequest(value);
+                }
+                OnPropertyChanged("WordCollection");
+            }
+        }
 
         public MainWindowViewModel(MainWindow view)
         {   
