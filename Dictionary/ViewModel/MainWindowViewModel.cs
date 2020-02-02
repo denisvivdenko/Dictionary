@@ -26,12 +26,29 @@ namespace Dictionary.ViewModel
         Articles,
         Interjection
     }
-    
+    public enum FilterPartSpeech
+    {
+        All,
+        Unknown,
+        Noun,
+        Pronoun,
+        Verb,
+        Adjective,
+        Adverb,
+        Preposition,
+        Conjunction,
+        Articles,
+        Interjection
+    }
+
     class MainWindowViewModel : ObservableObject
     {
         private MainWindow view;
         private bool _isCheckedEditMode;
         private string _searchRequest;
+        private FilterPartSpeech _filterPart;
+        private int _from;
+        private int _to;
 
         public SettingsModel settings;
         public DataBaseAccess dataAccess;
@@ -44,11 +61,63 @@ namespace Dictionary.ViewModel
         // Buttons interaction interface
         public Command AddButton { get; set; }
         public Command DelButton { get; set; }
-        public Command EditButton { get; set; }
 
         // Binging collection for DataGrid
         public BindingList<WordModel> WordCollection { get; set; }
        
+        // filters 
+        public FilterPartSpeech FilterPart
+        {
+            get
+            {
+                return _filterPart;
+            }
+            set
+            {
+                _filterPart = value;
+                SearchRequest = _searchRequest;
+            }
+        }
+
+        public string FromLength
+        {
+            get
+            {
+                return _from.ToString();
+            }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    _from = int.Parse(value);
+                } 
+                else
+                {
+                    _from = 0;
+                }
+                SearchRequest = _searchRequest;
+            }
+        }
+
+        public string ToLength
+        {
+            get
+            {
+                return _to.ToString();
+            }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    _to = int.Parse(value);
+                } 
+                else
+                {
+                    _to = -1;
+                }
+                SearchRequest = _searchRequest;
+            }
+        }
 
         // Selected item in DataGrid
         public WordModel SelectedWord { get; set; }
@@ -65,6 +134,7 @@ namespace Dictionary.ViewModel
                 OnPropertyChanged("IsCheckedEditMode");
             }
         }
+
         public string SearchRequest
         {
             get
@@ -74,14 +144,15 @@ namespace Dictionary.ViewModel
             set
             {
                 _searchRequest = value;
-
-                if (String.IsNullOrEmpty(_searchRequest))
+                BindingList<WordModel> searchedList;
+                if (String.IsNullOrEmpty(_searchRequest) && FilterPart == FilterPartSpeech.All
+                    && (_from != 0) && (_to != -1))
                 {
                     WordCollection = dataAccess.LoadWords();
                 }                
                 else
                 {
-                    WordCollection = dataAccess.SearchRequest(value);
+                    WordCollection = SearchModel.SearchByLength(dataAccess.SearchRequest(value, FilterPart), _from, _to); 
                 }
                 OnPropertyChanged("WordCollection");
             }
@@ -91,7 +162,6 @@ namespace Dictionary.ViewModel
         {   
             AddButton = new Command(AddAction);
             DelButton = new Command(DelAction);
-            EditButton = new Command(EditAction);
 
             settings = SettingsModel.GetInstance();
             dataAccess = DataBaseAccess.GetInstance();
@@ -107,6 +177,9 @@ namespace Dictionary.ViewModel
             settings.WordsAmount += 1;
             WordCollection.Add(word);
             dataAccess.SaveWord(word);
+
+            // this is for update the search request
+            SearchRequest = _searchRequest;
         }
 
         // Action when user click Del button
@@ -118,12 +191,6 @@ namespace Dictionary.ViewModel
                 dataAccess.RemoveWord(SelectedWord);
                 WordCollection.Remove(SelectedWord);
             }
-        }
-
-        // Action when user click Edit button
-        private void EditAction()
-        {  
-            
         }
     }
 }

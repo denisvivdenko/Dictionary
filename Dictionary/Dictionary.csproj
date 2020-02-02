@@ -97,6 +97,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Style\TextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +110,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\DataBaseAccess.cs" />
+    <Compile Include="Model\SearchModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="Model\WordModel.cs" />
     <Compile Include="ViewModel\Command.cs" />

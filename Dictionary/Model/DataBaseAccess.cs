@@ -100,10 +100,25 @@ namespace Dictionary.Model
         }
 
         // search for words that contains substring 
-        public BindingList<WordModel> SearchRequest(string request)
+        public BindingList<WordModel> SearchRequest(string filterWord, FilterPartSpeech filterPart)
         {
             BindingList<WordModel> list = new BindingList<WordModel>();
-            string query = string.Format("SELECT * FROM Words WHERE Word LIKE '%{0}%' ORDER BY Word;", request);
+            string query;
+            if (filterPart == FilterPartSpeech.All) // if filter part is not choosen
+            {
+                query = string.Format("SELECT * FROM Words WHERE Word LIKE '%{0}%' ORDER BY Word;", filterWord);
+            }
+            else
+            {
+                // query for both part and word
+                query = string.Format("SELECT * FROM Words WHERE Word LIKE '%{0}%' AND Part = '{1}' ORDER BY Word;", filterWord, filterPart.ToString());
+
+                if (String.IsNullOrEmpty(filterWord)) // extra query if word search is empty
+                {
+                    query = string.Format("SELECT * FROM Words WHERE Part = '{0}' ORDER BY Word;", filterPart.ToString());
+                }
+            }
+
             SQLiteCommand command = new SQLiteCommand(query, myConnection);
             using (SQLiteDataReader data = command.ExecuteReader())
             {
