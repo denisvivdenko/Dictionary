@@ -15,17 +15,17 @@ namespace Dictionary.Model
     {
         private static DataBaseAccess instance;
         private SQLiteConnection myConnection;
-
+        private string DB_PATH = SettingsModel.PATH + "//WordList.sqlite3";
         private DataBaseAccess()
         {
-            myConnection = new SQLiteConnection("Data Source = wordList.sqlite3");
-            if (!File.Exists("./wordList.sqlite3"))
+            myConnection = new SQLiteConnection($"Data Source = {DB_PATH}");
+            if (!File.Exists(DB_PATH))
             {
-                SQLiteConnection.CreateFile("./wordList.sqlite3");
+                SQLiteConnection.CreateFile(DB_PATH);
                 CreateTable();
             }
 
-            openConnection();
+            openConnection(); 
         }
         
         // realization of singleton because it is a database interface

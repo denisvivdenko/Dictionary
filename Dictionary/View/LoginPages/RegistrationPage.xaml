@@ -1,0 +1,32 @@
+﻿<Page x:Class="Dictionary.View.LoginPages.RegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Dictionary.View.LoginPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="320" d:DesignWidth="300"
+      Background="{DynamicResource MaterialDesignPaper}"
+      Title="Registration">
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Login:" FontWeight="Bold"/>
+            <TextBox Margin="0 5 0 10" Padding="5 0" Background="#e0e0e0"
+                             VerticalAlignment="Center" FontSize="13"
+                             BorderBrush="#e0e0e0" Height="30"/>
+            <TextBlock Text="Email:" FontWeight="Bold"/>
+            <TextBox Margin="0 5 0 10" Padding="5 0" Background="#e0e0e0"
+                             VerticalAlignment="Center" FontSize="13"
+                             BorderBrush="#e0e0e0" Height="30"/>
+            <TextBlock Text="Password:" FontWeight="Bold"/>
+            <TextBox Margin="0 5 0 20" Padding="5 0" Background="#e0e0e0"
+                             VerticalAlignment="Center" FontSize="13"
+                             BorderBrush="#e0e0e0" Height="30"/>
+            <Button Content="Create new account" Width="180"/>
+            <Button Content="Log In" Width="120" Margin="0 5 0 0"
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="30"
+                    Foreground="Gray" Click="LogInForm" />
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,35 @@
+﻿<Page x:Class="Dictionary.View.LoginPages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Dictionary.View.LoginPages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="300"
+      Background="{DynamicResource MaterialDesignPaper}"
+      Title="Login">
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Login:" FontWeight="Bold"/>
+            <TextBox Margin="0 5 0 10" Padding="5 0" Background="#e0e0e0"
+                             VerticalAlignment="Center" FontSize="13"
+                             BorderBrush="#e0e0e0" Height="30"/>
+            <TextBlock Text="Password:" FontWeight="Bold"/>
+            <TextBox Margin="0 5 0 20" Padding="5 0" Background="#e0e0e0"
+                             VerticalAlignment="Center" FontSize="13"
+                             BorderBrush="#e0e0e0" Height="30"/>
+            <Button Content="Sing In" Width="150"/>
+            <Button Content="Registration" Width="120" Margin="0 5 0 0"
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="25"
+                    Foreground="Gray" Click="RegistrationForm"/>
+        </StackPanel>
+    </Grid>
+</Page>

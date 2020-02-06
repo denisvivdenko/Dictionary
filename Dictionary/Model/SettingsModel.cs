@@ -10,7 +10,8 @@ namespace Dictionary.Model
 {
     public class SettingsModel
     { 
-        private static readonly string PATH = $"{Environment.CurrentDirectory}\\settings.json";
+        public static readonly string PATH = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\DictionaryApp";
+        private static readonly string JSON_PATH = PATH + "\\setting.json";
         private static SettingsModel instance;
         private int _lastId;
         private int _wodsAmount;
@@ -60,12 +61,14 @@ namespace Dictionary.Model
         // Method to load and store data in json file 
         private static SettingsModel LoadData()
         {
-            if (!File.Exists(PATH))
+            if (!File.Exists(JSON_PATH))
             {
-                File.CreateText(PATH).Dispose();
+                CreateDataDir();
+
+                File.CreateText(JSON_PATH).Dispose();
                 return new SettingsModel();
             }
-            using (var reader = File.OpenText(PATH))
+            using (var reader = File.OpenText(JSON_PATH))
             {
                 var fileText = reader.ReadToEnd();
                 return JsonConvert.DeserializeObject<SettingsModel>(fileText);
@@ -74,7 +77,7 @@ namespace Dictionary.Model
 
         private static void SaveData(SettingsModel settings)
         {
-            using (StreamWriter writer = File.CreateText(PATH))
+            using (StreamWriter writer = File.CreateText(JSON_PATH))
             {
                 string output = JsonConvert.SerializeObject(settings);
                 writer.Write(output);
@@ -90,5 +93,12 @@ namespace Dictionary.Model
             }
         }
 
+        private static void CreateDataDir()
+        {
+            if (!System.IO.Directory.Exists(PATH))
+            {
+                System.IO.Directory.CreateDirectory(PATH);
+            }
+        }
     }
 }

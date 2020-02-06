@@ -62,6 +62,9 @@ namespace Dictionary.ViewModel
         public Command AddButton { get; set; }
         public Command DelButton { get; set; }
 
+        // sign in interface 
+        public Command LoginButton { get; set; }
+
         // Binging collection for DataGrid
         public BindingList<WordModel> WordCollection { get; set; }
        
@@ -144,7 +147,6 @@ namespace Dictionary.ViewModel
             set
             {
                 _searchRequest = value;
-                BindingList<WordModel> searchedList;
                 if (String.IsNullOrEmpty(_searchRequest) && FilterPart == FilterPartSpeech.All
                     && (_from != 0) && (_to != -1))
                 {
@@ -162,6 +164,7 @@ namespace Dictionary.ViewModel
         {   
             AddButton = new Command(AddAction);
             DelButton = new Command(DelAction);
+            LoginButton = new Command(LoginAction);
 
             settings = SettingsModel.GetInstance();
             dataAccess = DataBaseAccess.GetInstance();
@@ -191,6 +194,12 @@ namespace Dictionary.ViewModel
                 dataAccess.RemoveWord(SelectedWord);
                 WordCollection.Remove(SelectedWord);
             }
+        }
+
+        private void LoginAction()
+        {
+            LoginWindow login = new LoginWindow();
+            login.ShowDialog();
         }
     }
 }
