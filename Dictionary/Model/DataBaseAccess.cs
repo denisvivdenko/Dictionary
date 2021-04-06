@@ -15,7 +15,7 @@ namespace Dictionary.Model
     {
         private static DataBaseAccess instance;
         private SQLiteConnection myConnection;
-        private string DB_PATH = SettingsModel.PATH + "//WordList.sqlite3";
+        private string DB_PATH = SettingsModel.PATH + "\\WordList.sqlite3";
         private DataBaseAccess()
         {
             myConnection = new SQLiteConnection($"Data Source = {DB_PATH}");
