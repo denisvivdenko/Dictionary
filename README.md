@@ -1,5 +1,5 @@
-# Dictionary
-This is my pet project which has been created to be able to store your new learned phrases or words. Let me show you the functionality of the program.
+# Dictionary (C# .NetFramework, WPF, SQLite)
+This is my pet project which has been created to be able to store my new learned phrases or words. Let me show you the functionality of the program.
 The image below shows the whole application interface.
 
 ![alt text](https://github.com/Justdek-code/Dictionary/blob/master/screenshots/main_preview.png?raw=true)
